@@ -16,21 +16,13 @@ class WebHandler extends BaseHandler
                 Application::EVENT_BEFORE_ACTION,
                 function () use ($app, &$agent) {
                     $app->controller->view->registerJs(
-                        preg_replace(
-                            '#</?script( type="text/javascript")?>#',
-                            '',
-                            $this->getAgent()->getBrowserTimingHeader()
-                        ),
+                        $this->getAgent()->getBrowserTimingHeader(false),
                         View::POS_HEAD,
                         'newrelic-head'
                     );
 
                     $app->controller->view->registerJs(
-                        preg_replace(
-                            '#</?script( type="text/javascript")?>#',
-                            '',
-                            $this->getAgent()->getBrowserTimingFooter()
-                        ),
+                        $this->getAgent()->getBrowserTimingFooter(false),
                         View::POS_END,
                         'newrelic-end'
                     );
